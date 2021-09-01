@@ -1,3 +1,7 @@
+{{ config (
+    materialized = 'table'
+)}}
+
 with customer_orders as (
     select  customer_id,
             min(created_at) as first_order_at,
@@ -14,4 +18,4 @@ select  customers.id as customer_id,
 from `analytics-engineers-club.coffee_shop.customers` customers 
 inner join customer_orders
 on customers.id = customer_orders.customer_id
-order by 4 asc;
+order by 4 asc
