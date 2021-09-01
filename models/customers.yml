@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: customers
+    description: > 
+      Cleaned up data for our customers. Lorem ipsum lorem ipsum
+      contains 5 colums, customers' names, emails, dates of first orders,
+      and total lifetime orders.
+
+    columns:
+      - name: customer_id
+        description: Primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: first_order_at
+        description: Date of customer's first order
