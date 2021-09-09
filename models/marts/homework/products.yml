@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: products
+    description: database of all coffee shop products
+    columns:
+      - name: product_id
+        description: Primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: category
+        tests:
+          - not_null
+      - name: name
+        tests:
+          - not_null
+      - name: created_at
+        tests:
+          - not_null

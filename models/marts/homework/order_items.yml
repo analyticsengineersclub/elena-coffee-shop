@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: order_items
+    description: order item record with price and chronological count for each customer
+    columns:
+      - name: order_item_id
+        description: Primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null    
+      - name: product_id
+        tests:
+          - not_null   
+      - name: order_date
+        description: date of order creation (sale date)
+      - name: price
+        description: price at which the product was sold
+        tests:
+          - not_null
