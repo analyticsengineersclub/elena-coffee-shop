@@ -1,0 +1,42 @@
+version: 2
+
+sources:
+  - name: coffee_shop
+    database: analytics-engineers-club
+    schema: coffee_shop
+
+    tables:
+      - name: customers
+        columns:
+          - name: id
+            tests: 
+              - unique
+              - not_null
+
+      - name: orders
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+
+      - name: order_items
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+
+      - name: products
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
+      
+      - name: product_prices
+        columns:
+          - name: id
+            tests:
+              - unique
+              - not_null
