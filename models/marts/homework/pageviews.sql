@@ -24,7 +24,10 @@ first_visit as (
     select pageviews.pageview_id,
             pageviews.timestamp,
             pageviews.customer_id,
-            first_visitor_id.visitor_id,
+            case when 
+                pageviews.customer_id is NULL then pageviews.visitor_id 
+            else
+                first_visitor_id.visitor_id end as visitor_id,
             pageviews.device_type,
             pageviews.page 
     from pageviews 
