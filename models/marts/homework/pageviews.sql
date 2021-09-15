@@ -2,34 +2,26 @@ with pageviews as (
     select * from {{ ref('stg_web_tracking__pageviews')}}
 ),
 
-first_visit as (
+ordered_pageviews as (
     select 
         customer_id,
-        min(timestamp) as first_visit_timestamp
+        visitor_id,
+        timestamp,
+        row_number() over (partition by customer_id order by timestamp asc) as pageview_order
     from pageviews 
-    where customer_id is not null
-    group by 1
-    order by 1),
+    where customer_id is not null)
 
-    first_visitor_id as (
     select 
-        first_visit.customer_id, 
-        first_visit.first_visit_timestamp,
-        pageviews.visitor_id 
-    from first_visit
-    left join pageviews on
-        first_visit.customer_id = pageviews.customer_id and
-        first_visit.first_visit_timestamp = pageviews.timestamp)
-
-    select pageviews.pageview_id,
-            pageviews.timestamp,
-            pageviews.customer_id,
-            case when 
-                pageviews.customer_id is NULL then pageviews.visitor_id 
-            else
-                first_visitor_id.visitor_id end as visitor_id,
-            pageviews.device_type,
-            pageviews.page 
-    from pageviews 
-    left join first_visitor_id on 
-        pageviews.customer_id = first_visitor_id.customer_id 
+    pageviews.pageview_id,
+    pageviews.timestamp,
+    pageviews.customer_id,
+    case when 
+        pageviews.customer_id is null then pageviews.visitor_id 
+    else
+        ordered_pageviews.visitor_id end as visitor_id,
+    pageviews.page,
+    pageviews.device_type
+from pageviews 
+left join ordered_pageviews on
+    pageviews.customer_id = ordered_pageviews.customer_id and
+    pageview_order = 1
