@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: pageviews
+    description: pageviews log with visitor_id stitching across sessions with logged in user
+    columns:
+      - name: pageview_id
+        description: Primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+      - name: visitor_id
+        tests:
+          - not_null    
+      - name: timestamp
+        tests:
+          - not_null   
+      - name: page
+      - name: device_type
