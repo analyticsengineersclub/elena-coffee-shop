@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: pageviews
+    description: pageviews log with visitor_id stitching across sessions with logged in user
+    columns:
+      - name: pageview_id
+        description: Primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+      - name: visitor_id
+        tests:
+          - not_null    
+      - name: timestamp
+        tests:
+          - not_null   
+      - name: page
+      - name: device_type
+
+  - name: pageviews_sessions
+    description: pageviews log with visitor_id stitching and session_id assignment (30 min window)
+    columns:
+      - name: pageview_id
+        description: Primary key of the model
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+      - name: visitor_id
+        tests:
+          - not_null    
+      - name: timestamp
+        tests:
+          - not_null   
+      - name: page
+      - name: device_type
+      - name: session_id
+        tests:
+          - not_null 
+      - name: session_start_at
+        tests:
+          - not_null
+      - name: session_end_at
+        tests:
+          - not_null
+
+  - name: sessions
+    description: session metadata, including duration, pageviews, purchases
+    columns:
+      - name: session_id
+        tests:
+          - unique
+          - not_null
+      - name: session_start_at
+        tests:
+          - not_null
+      - name: session_end_at
+        test:
+          - not_null
+      - name: session_length_seconds
+        description: time difference between first and last events of session (in whole seconds)
+        test:
+          - not_null
+      - name: total_pageviews
+        description: total pages viewed during session (can include duplicates)
+        tests:
+          - not_null
+      - name: unique_pages
+        description: unique website pages viewed during session
+        tests:
+          - not_null
+      - name: total_purchases
+        description: total instances of order confirmation pageviews during session
+        tests:
+          - not_null
+    
