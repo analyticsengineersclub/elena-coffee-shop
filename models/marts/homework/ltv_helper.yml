@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: ltv_helper
+    description: > 
+      Weekly & lifetime revenue for each customer
+    columns:
+      - name: customer_id
+        description: Primary key of the model
+        tests:
+          - not_null
+      - name: first_order_date
+        description: Date of customer's first order
+        tests:
+          - not_null
+      - name: first_order_week
+        description: week of customer's first order (for clustering)
+        tests:
+          - not_null
+      - name: week_count
+        description: week number (1 - N) where N is the number of weeks since first order in dataset to now
+        tests:
+          - not_null
+      - name: weekly_revenue
+        description: total order cost on a given week since first order for a given customer
+        tests:
+          - not_null
+      - name: lifetime_revenue
+        description: total order cost since first order and through corresponding week number for a given customer
+        tests:
+          - not_null
