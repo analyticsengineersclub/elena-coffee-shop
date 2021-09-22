@@ -1,3 +1,5 @@
+{{ config(materialized = 'table')}}
+
 with first_orders as (
     select 
         customer_id,
