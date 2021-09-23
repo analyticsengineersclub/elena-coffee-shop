@@ -1,3 +1,9 @@
+{{ config(
+        materialized = 'table',
+        cluster_by = ["order_date","product_id"],
+    )
+}}
+
 with 
 
 orders as (
