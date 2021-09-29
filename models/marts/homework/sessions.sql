@@ -1,3 +1,5 @@
+{{ config(materialized = 'table')}}
+
 select 
     session_id,
     session_start_at,

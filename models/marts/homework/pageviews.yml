@@ -20,29 +20,38 @@ models:
       - name: device_type
 
   - name: pageviews_sessions
-    description: pageviews log with visitor_id stitching and session_id assignment (30 min window)
+    description: >
+      log of all pageviews (post-user stitching) with pageviews within 30 minutes from each other grouped into sessions
     columns:
       - name: pageview_id
         description: Primary key of the model
         tests:
           - unique
           - not_null
-      - name: customer_id
+      - name: timestamp
+        description: date & time when pageview happened
+        tests:
+          - not_null
       - name: visitor_id
+        description: idetnificator for each user visiting website, all known customers have same visitor_id across sessions
         tests:
           - not_null    
-      - name: timestamp
-        tests:
-          - not_null   
+      - name: customer_id
+        description: unique id for a paying customers, can be NULL for pageviews happening before the order  
       - name: page
-      - name: device_type
-      - name: session_id
+        description: name of page visited
         tests:
-          - not_null 
+          - not_null
+      - name: session_id
+        description: unique id for a visitor session, pageviews within session are no more than 30 min apart
+        tests:
+          - not_null
       - name: session_start_at
+        description: time of session start
         tests:
           - not_null
       - name: session_end_at
+        description: time of session end
         tests:
           - not_null
 
@@ -50,6 +59,7 @@ models:
     description: session metadata, including duration, pageviews, purchases
     columns:
       - name: session_id
+        description: unique identifier for a specific session
         tests:
           - unique
           - not_null
