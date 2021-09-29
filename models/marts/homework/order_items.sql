@@ -18,6 +18,10 @@ product_prices as (
     select * from {{ ref('stg_coffee_shop__product_prices')}}
 ),
 
+products as (
+    select * from {{ ref('stg_coffee_shop__products')}}
+),
+
 
 final as (
 select 
@@ -26,12 +30,15 @@ select
     order_items.product_id,
     orders.created_at as order_date,
     orders.customer_id,
+    products.category as product_category,
     product_prices.price,
     dense_rank() over (partition by orders.customer_id order by orders.customer_id, orders.created_at asc) as customer_order_count  
 
 from order_items
 
 left join orders on order_items.order_id = orders.order_id 
+
+left join products on order_items.product_id = products.product_id
 
 left join product_prices on 
         order_items.product_id = product_prices.product_id and
