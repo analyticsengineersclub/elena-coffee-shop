@@ -12,9 +12,18 @@ models:
 
       - name: coffee_beans_amount
         description: total reveunue from coffee beans sales
+        tests: 
+          - positive_values
+              # severity: warn
 
       - name: merch_amount
         description: total revenue from merch sales
+        tests: 
+          - positive_values
+              # severity: warn
 
       - name: brewing_supplies_amount
         description: total revenue from brewing supplies sales
+        tests: 
+          - positive_values
+              # severity: warn

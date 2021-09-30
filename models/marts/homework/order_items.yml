@@ -24,7 +24,8 @@ models:
         description: price at which the product was sold
         tests:
           - not_null
-      - name: product_categoru
+          - positive_value
+      - name: product_category
         description: category of the product
         tests:
           - not_null

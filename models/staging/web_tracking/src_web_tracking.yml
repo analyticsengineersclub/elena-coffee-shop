@@ -15,3 +15,7 @@ sources:
           - name: visitor_id
             tests: 
               - not_null
+          - name: page
+            tests: 
+              - not_null
+              - url_format
